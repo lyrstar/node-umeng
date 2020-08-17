@@ -6,9 +6,16 @@ umeng
 ##### 初始化
 
 ```
-const UPush = require('node-umeng');
-const uPush = new UPush('appkey', 'appSecret');
+const {UPush} = require('node-umeng');
+const uPush = new UPush(appkey, appSecret, {ospush, os_activity});
 ```
+
+参数 | 说明
+:---| :---
+appkey | 必填，应用唯一标识
+appSecret | 必填，App Master Secret
+ospush | 可选，默认为false。当为true时，表示MIUI、EMUI、Flyme系统设备离线转为系统下发
+os_activity | 可选，ospush值为true时生效，表示走系统通道时打开指定页面acitivity的完整包路径
 
 ##### 单播
 

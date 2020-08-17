@@ -1,6 +1,6 @@
 {
   "name": "node-umeng",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "node-umeng",
   "main": "index.js",
   "scripts": {

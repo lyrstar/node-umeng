@@ -1,4 +1,4 @@
-const UPush = require('../src/u-push');
+const {UPush} = require('../index');
 const uPush = new UPush('appkey', 'appSecret');
 
 unicast().then();

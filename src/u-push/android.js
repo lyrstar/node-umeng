@@ -2,7 +2,9 @@ let {md5} = require('../util/util');
 let {post} = require('../util/https');
 
 module.exports.unicast = function (title, body, pushId, options = {}) {
-    if (!options.Appkey) options.Appkey = this.appkey;
+    options.Appkey = this.appkey;
+    options.ospush = this.ospush;
+    options.os_activity = this.os_activity;
     if (!options.title) options.title = title;
     if (!options.body) options.body = body;
     if (!options.pushId) options.pushId = pushId;
@@ -11,7 +13,9 @@ module.exports.unicast = function (title, body, pushId, options = {}) {
 }
 
 module.exports.listcast = function (title, body, pushIds, options = {}) {
-    if (!options.Appkey) options.Appkey = this.appkey;
+    options.Appkey = this.appkey;
+    options.ospush = this.ospush;
+    options.os_activity = this.os_activity;
     if (!options.title) options.title = title;
     if (!options.body) options.body = body;
     if (!options.pushIds) options.pushIds = pushIds;
@@ -20,7 +24,9 @@ module.exports.listcast = function (title, body, pushIds, options = {}) {
 }
 
 module.exports.broadcast = function (title, body, options = {}) {
-    if (!options.Appkey) options.Appkey = this.appkey;
+    options.Appkey = this.appkey;
+    options.ospush = this.ospush;
+    options.os_activity = this.os_activity;
     if (!options.title) options.title = title;
     if (!options.body) options.body = body;
     let template = Template('broadcast', options);
@@ -43,7 +49,7 @@ function Template(type, options) {
                 // 当display_type=message时，body的内容只需填写custom字段。
                 // 当display_type=notification时，body包含如下参数:
                 // 通知展现内容:
-                "ticker": "通知栏提示文字",    // 必填，通知栏提示文字
+                "ticker": options.title,    // 必填，通知栏提示文字
                 "title": options.title,    // 必填，通知标题
                 "text": options.body,    // 必填，通知文字描述
 
@@ -71,6 +77,8 @@ function Template(type, options) {
         },
         "description": "",    // 可选，发送消息描述，建议填写。
     };
+    if (options.ospush) template.ospush = true;
+    if (options.os_activity) template.mi_activity = options.os_activity;
     switch (type) {
         case 'unicast': //单播
             template.device_tokens = options.pushId; //表示指定的单个设备
