@@ -6,7 +6,7 @@ umeng
 ##### 初始化
 
 ```
-const UPush = require('../src/u-push');
+const UPush = require('node-umeng');
 const uPush = new UPush('appkey', 'appSecret');
 ```
 
